@@ -6,20 +6,23 @@ public class WaveScript : MonoBehaviour
 {
     [SerializeField]
     GameObject[] monsterTrans;
+    [SerializeField]
     List<GameObject> monsterChild = new List<GameObject>();
-    public MonsterType[] monsterTypes { get; set; }
+    public MonsterType[] monsterTypes;
 
     Camera mainCamera;
-    private void Awake()
+    private void Start()
     {
         mainCamera = Camera.main;
 
-        for (int i = 0; i < GameManager.current.difficulty; i++)
+        for (int i = 0; i < monsterTrans[GameManager.current.difficulty].transform.childCount; i++)
         {
-            for (int j = 0; j < monsterTrans[i].transform.childCount; j++)
-            {
-                MonsterManager.current.GetMosnter(monsterTypes[Random.Range(0, monsterTypes.Length)]);
-            }
+            monsterChild.Add(MonsterManager.current.GetMosnter(monsterTypes
+                [Random.Range(0, monsterTypes.Length)]).gameObject);
+            monsterChild[monsterChild.Count - 1].transform.position = 
+                monsterTrans[GameManager.current.difficulty].transform.GetChild(i).transform.position;
+            monsterChild[monsterChild.Count - 1].transform.parent = 
+                monsterTrans[GameManager.current.difficulty].transform.GetChild(i).transform;
         }
     }
     

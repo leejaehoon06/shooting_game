@@ -32,6 +32,7 @@ public class WaveManager : MonoBehaviour
             obj.transform.position += new Vector3(0, 10);
             currentWave = obj.GetComponent<WaveScript>();
             currentWave.monsterTypes = waveTypes[GameManager.current.difficulty].monsterTypes;
+            yield return waitForEndOfFrame;
             while (currentWave.ShipsStillAlive())
             {
                 yield return waitForEndOfFrame;
