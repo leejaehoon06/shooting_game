@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 450456349}
   - component: {fileID: 450456348}
   m_Layer: 0
-  m_Name: Wavemanager
+  m_Name: WaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -628,6 +628,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveScripts:
   - {fileID: 5935871052399653915, guid: 5e8e7a5946c7b4b45b20fd72d0c34040, type: 3}
+  waveTypes:
+  - monsterTypes: 000000000100000002000000
+  - monsterTypes: 000000000100000002000000
+  - monsterTypes: 000000000100000002000000
+  - monsterTypes: 000000000100000002000000
 --- !u!4 &450456349
 Transform:
   m_ObjectHideFlags: 0
@@ -1634,6 +1639,54 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1203420752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1203420754}
+  - component: {fileID: 1203420753}
+  m_Layer: 0
+  m_Name: MonsterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1203420753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203420752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93d7926fea3d0e746ad18314b376a446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterPrefabs:
+  - {fileID: -7878001593961690885, guid: b172a105e076ba0489cd51f5ba155f81, type: 3}
+  - {fileID: -7535910861540211644, guid: a1f4e4d49d760b4419391552e905a876, type: 3}
+  - {fileID: -6476185099520335484, guid: 22720e0c452dde840a68beec05980ee1, type: 3}
+--- !u!4 &1203420754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203420752}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00000023841858, y: 4.6115294, z: 0.03475348}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1276733381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,3 +2754,4 @@ SceneRoots:
   - {fileID: 1657425744}
   - {fileID: 1890817739}
   - {fileID: 450456349}
+  - {fileID: 1203420754}

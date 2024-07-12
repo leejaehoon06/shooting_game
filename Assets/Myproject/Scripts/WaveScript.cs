@@ -5,40 +5,46 @@ using UnityEngine;
 public class WaveScript : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] monsterParent;
-    List<List<GameObject>> monsterChild = new List<List<GameObject>>();
+    GameObject[] monsterTrans;
+    List<GameObject> monsterChild = new List<GameObject>();
+    public MonsterType[] monsterTypes { get; set; }
+
+    Camera mainCamera;
     private void Awake()
     {
-        for(int i = 0; i < monsterParent.Length; i++)
+        mainCamera = Camera.main;
+
+        for (int i = 0; i < GameManager.current.difficulty; i++)
         {
-            monsterChild.Add(new List<GameObject>());
-            if (i <= GameManager.current.difficulty)
+            for (int j = 0; j < monsterTrans[i].transform.childCount; j++)
             {
-                for (int j = 0; j < monsterParent[i].transform.childCount; j++)
-                {
-                    monsterChild[i].Add(monsterParent[i].transform.GetChild(j).gameObject);
-                }
-            }
-            else
-            {
-                for (int j = 0; j < monsterParent[i].transform.childCount; j++)
-                {
-                    monsterParent[i].transform.GetChild(j).gameObject.SetActive(false);
-                }
+                MonsterManager.current.GetMosnter(monsterTypes[Random.Range(0, monsterTypes.Length)]);
             }
         }
     }
-
+    
+    private void OnEnable()
+    {
+        transform.parent = null;
+    }
+    private void Update()
+    {
+        if (transform.position.y <= mainCamera.transform.position.y && transform.parent == null)
+        {
+            transform.parent = mainCamera.transform;
+            for (int i = 0; i < monsterChild.Count; i++)
+            {
+                 monsterChild[i].GetComponent<Monster>().Arrive();
+            }
+        }
+    }
     public bool ShipsStillAlive()
     { 
         for (int i = 0; i < monsterChild.Count; i++)
         {
-            for (int j = 0; j < monsterChild[i].Count; j++)
+            if (monsterChild[i].activeSelf == true)
             {
-                if (monsterChild[i][j].activeSelf == true)
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;

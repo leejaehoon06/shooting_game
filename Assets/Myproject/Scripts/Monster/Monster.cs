@@ -5,6 +5,10 @@ using UnityEngine;
 public class Monster : MonoBehaviour, IHittable
 {
     [SerializeField]
+    MonsterType _monsterType;
+    public MonsterType monsterType { get { return _monsterType; } }
+
+    [SerializeField]
     float _maxHp = 100;
     public float maxHp { get { return _maxHp; } set { _maxHp = value; } }
     float _curHp = 100;
@@ -15,11 +19,15 @@ public class Monster : MonoBehaviour, IHittable
     Animator anim;
     BoxCollider2D coll;
     Camera mianCamera;
+    MonsterMove move;
+    //MonsterAttack attack;
 
     bool godMode = false;
 
     void Start()
     {
+        move = GetComponent<MonsterMove>();
+        move.enabled = false;
         _curHp = _maxHp;
         anim = GetComponent<Animator>();
         coll = GetComponent<BoxCollider2D>();
@@ -35,10 +43,11 @@ public class Monster : MonoBehaviour, IHittable
             godMode = true;
             coll.enabled = true;
         }
-        else if (transform.position.y <= mianCamera.ScreenToWorldPoint(new Vector2(0, 0)).y - 1) 
-        {
-            gameObject.SetActive(false);
-        }
+    }
+
+    public void Arrive()
+    {
+        move.enabled = true;
     }
 
     public void TakeDamaged(float damage)
