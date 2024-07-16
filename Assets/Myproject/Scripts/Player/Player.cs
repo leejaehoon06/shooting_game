@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] 
     Weapon _weapon;
     public Weapon weapon { get { return _weapon; } set { _weapon = value; } }
-
+    public Dictionary<Ingredient, int> Inventory = new Dictionary<Ingredient, int>();
     
     //bool DeathSwitch = false;
     Vector3 pos;
@@ -23,9 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     float _attackPower = 10;
     public float attackPower { get { return _attackPower; } set { _attackPower = value; } }
-    int level = 0;
-    int maxExp = 5;
-    int curExp = 0;
+    public int level { get; private set; } = 1;
+    public float maxExp { get; private set; } = 50;
+    public float curExp { get; set; }
 
     Vector2 minPos;
     Vector2 maxPos;
@@ -64,5 +64,31 @@ public class Player : MonoBehaviour
         pos.y = Mathf.Clamp(pos.y, minPos.y, maxPos.y);
         transform.position = pos;
     }
-
+    public void PlusExp(float ExpNum)
+    {
+        curExp += ExpNum;
+        if(curExp >= maxExp)
+        {
+            level++;
+            curExp -= maxExp;
+            maxExp *= 1.1f;
+        }
+        //
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<IngredientObj>() != null)
+        {
+            IngredientObj ingredient = collision.gameObject.GetComponent<IngredientObj>();
+            if (Inventory.ContainsKey(ingredient.ingredient))
+            {
+                Inventory[ingredient.ingredient]++;
+            }
+            else
+            {
+                Inventory.Add(ingredient.ingredient, 1);
+            }
+            collision.gameObject.SetActive(false);
+        }
+    }
 }

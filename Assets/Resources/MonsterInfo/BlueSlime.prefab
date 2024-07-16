@@ -168,6 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _monsterType: 1
+  dropIngredient: {fileID: 11400000, guid: c8a8a6ea403b429489792ebc54b9071f, type: 2}
   _maxHp: 10
   scorePoint: 20
 --- !u!114 &3460063467473705124

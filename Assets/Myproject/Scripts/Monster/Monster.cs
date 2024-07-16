@@ -7,6 +7,8 @@ public class Monster : MonoBehaviour, IHittable
     [SerializeField]
     MonsterType _monsterType;
     public MonsterType monsterType { get { return _monsterType; } }
+    [SerializeField]
+    Ingredient dropIngredient;
 
     [SerializeField]
     float _maxHp = 100;
@@ -62,8 +64,15 @@ public class Monster : MonoBehaviour, IHittable
             coll.enabled = false;
             anim.Play("Death");
             GameManager.current.AddScore(scorePoint);
+            Player.current.PlusExp(scorePoint);
+            DropItem();
             StartCoroutine(deathCheck());
         }
+    }
+    void DropItem()
+    {
+        IngredientObj ingredientObj = IngredientManager.current.GetIngredient(dropIngredient);
+        ingredientObj.gameObject.transform.position = transform.position;
     }
     IEnumerator deathCheck()
     {

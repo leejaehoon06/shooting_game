@@ -10,4 +10,5 @@ public class Food : ScriptableObject
     public string foodName;
     [TextArea]
     public string foodInfo;
+    //public Ingredient[] ingredient;
 }
