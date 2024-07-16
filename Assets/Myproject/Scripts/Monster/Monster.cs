@@ -54,6 +54,10 @@ public class Monster : MonoBehaviour, IHittable
 
     public void TakeDamaged(float damage)
     {
+        if (coll.enabled == false)
+        {
+            return;
+        }
         _curHp -= damage;
         if (_curHp > 0)
         {
