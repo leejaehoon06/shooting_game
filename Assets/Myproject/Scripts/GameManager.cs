@@ -35,7 +35,13 @@ public class GameManager : MonoBehaviour
         }
         
     }
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            InventoryUI.current.InventorySwitch();
+        }
+    }
 
     public void AddScore(int point)
     {

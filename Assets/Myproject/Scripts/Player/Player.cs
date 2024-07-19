@@ -93,14 +93,13 @@ public class Player : MonoBehaviour
         maxHp *= 1.1f;
         curHp = maxHp;
         attackPower *= 1.1f;
-        switch (level)
-        {//이미지 변경
-            case 5:
-                anim.runtimeAnimatorController = playerAnimations[0];
-                break;
-            case 11:
-                anim.runtimeAnimatorController = playerAnimations[1];
-                break;
+        for (int i = 0; i < levelUpNums.Length; i++)
+        {
+            if (levelUpNums[i] == level)
+            {
+                anim.runtimeAnimatorController = playerAnimations[i];
+                return;
+            }
         }
 
     }
