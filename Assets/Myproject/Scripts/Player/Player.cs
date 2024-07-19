@@ -5,10 +5,19 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player current;
+    [SerializeField]
+    Transform _HpPoint;
+    public Transform HpPoint {  get { return _HpPoint; } }
     [SerializeField] 
     Weapon _weapon;
     public Weapon weapon { get { return _weapon; } set { _weapon = value; } }
-    public Dictionary<Ingredient, int> Inventory = new Dictionary<Ingredient, int>();
+    public Dictionary<Ingredient, int> inventory = new Dictionary<Ingredient, int>();
+
+    [SerializeField]
+    RuntimeAnimatorController[] playerAnimations;
+    [SerializeField]
+    int[] levelUpNums;
+    Animator anim;
     
     //bool DeathSwitch = false;
     Vector3 pos;
@@ -25,8 +34,9 @@ public class Player : MonoBehaviour
     public float attackPower { get { return _attackPower; } set { _attackPower = value; } }
     public int level { get; private set; } = 1;
     public float maxExp { get; private set; } = 50;
-    public float curExp { get; set; }
-
+    public float curExp { get; private set; }
+    public float maxUltimatePoint { get; } = 500;
+    public float curUltimatePoint { get; private set; }
     Vector2 minPos;
     Vector2 maxPos;
 
@@ -37,17 +47,20 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _curHp = _maxHp;
-        curExp = maxExp;
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
-        minPos = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
-        maxPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        Move();
-        weapon?.UpdateTimer();
-        if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)))
+        if (Time.timeScale > 0)
         {
-            weapon.Shoot();
+            minPos = Camera.main.ScreenToWorldPoint(new Vector2(0, 0));
+            maxPos = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+            Move();
+            weapon?.UpdateTimer();
+            if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0)))
+            {
+                weapon.Shoot();
+            }
         }
     }
     private void Move()
@@ -69,24 +82,54 @@ public class Player : MonoBehaviour
         curExp += ExpNum;
         if(curExp >= maxExp)
         {
-            level++;
-            curExp -= maxExp;
-            maxExp *= 1.1f;
+            LevelUp();
         }
-        //
+    }
+    void LevelUp()
+    {
+        level++;
+        curExp -= maxExp;
+        maxExp *= 1.1f;
+        maxHp *= 1.1f;
+        curHp = maxHp;
+        attackPower *= 1.1f;
+        switch (level)
+        {//이미지 변경
+            case 5:
+                anim.runtimeAnimatorController = playerAnimations[0];
+                break;
+            case 11:
+                anim.runtimeAnimatorController = playerAnimations[1];
+                break;
+        }
+
+    }
+    public void PlusUltimatePoint(float UltimateNum)
+    {
+        curUltimatePoint += UltimateNum;
+        if(curUltimatePoint >= maxUltimatePoint)
+        {
+            curUltimatePoint = maxUltimatePoint;
+        }
+    }
+    public void Ultimate()
+    {
+        curUltimatePoint = 0;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<IngredientObj>() != null)
         {
             IngredientObj ingredient = collision.gameObject.GetComponent<IngredientObj>();
-            if (Inventory.ContainsKey(ingredient.ingredient))
+            if (inventory.ContainsKey(ingredient.ingredient))
             {
-                Inventory[ingredient.ingredient]++;
+                inventory[ingredient.ingredient]++;
+                InventoryUI.current.AddIngredientNum(ingredient.ingredient);
             }
             else
             {
-                Inventory.Add(ingredient.ingredient, 1);
+                inventory.Add(ingredient.ingredient, 1);
+                InventoryUI.current.AddInventorySlot(ingredient.ingredient);
             }
             collision.gameObject.SetActive(false);
         }

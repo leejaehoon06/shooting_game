@@ -39,11 +39,14 @@ public class Monster : MonoBehaviour, IHittable
 
     void Update()
     {
-        if (transform.position.y <= mianCamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y 
-            && godMode == false)
+        if (Time.timeScale > 0) 
+        { 
+        if (transform.position.y <= mianCamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y
+        && godMode == false)
         {
             godMode = true;
             coll.enabled = true;
+        }
         }
     }
 
@@ -59,6 +62,7 @@ public class Monster : MonoBehaviour, IHittable
             return;
         }
         _curHp -= damage;
+        Player.current.PlusUltimatePoint(scorePoint);
         if (_curHp > 0)
         {
             anim.Play("Hurt", -1, 0);

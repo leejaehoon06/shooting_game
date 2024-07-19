@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8118742053521992192}
   - component: {fileID: 7215914963881407380}
   m_Layer: 0
-  m_Name: Male4_95
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5881520752026078530}
+  - {fileID: 6947941783778292189}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &939143613764682130
@@ -123,7 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ac98005306e3174eb10b1ee9da4a55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _HpPoint: {fileID: 6947941783778292189}
   _weapon: {fileID: 8126905283201336283}
+  playerAnimations:
+  - {fileID: 9100000, guid: d9719e034676b154eb55dfb0cf7a6374, type: 2}
+  - {fileID: 9100000, guid: 9824c48ee82406643be67196b5da7871, type: 2}
+  levelUpNums: 
   speed: 5
   _maxHp: 100
   _attackPower: 10
@@ -245,3 +251,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponInfo: {fileID: 11400000, guid: 9992dc38f51bf64488036078137663cc, type: 2}
   shotTimer: 0
+--- !u!1 &8956009201841308031
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6947941783778292189}
+  m_Layer: 0
+  m_Name: HpPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6947941783778292189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956009201841308031}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2266298513296081966}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
