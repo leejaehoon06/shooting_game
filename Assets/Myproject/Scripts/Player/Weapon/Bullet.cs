@@ -10,20 +10,28 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        //transform.position += transform.up * Time.deltaTime; //같은 결과
         transform.Translate(bulletSpeed * Time.deltaTime, 0f,  0f, Space.Self);
     }
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Monster"))
         {
             IHittable hittable = collision.GetComponent<IHittable>();
-            if (hittable != null)
+            if (hittable != null && collision.gameObject.GetComponent<Collider2D>().enabled == true)
             {
-                hittable.TakeDamaged(bulletDamage + Player.current.attackPower);
+                hittable.TakeDamaged(bulletDamage * Player.current.attackPower);
                 gameObject.SetActive(false);
             }
+        }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            IHittable hittable = collision.GetComponent<IHittable>();
+            if (Player.current.godMod == false)
+            {
+                hittable.TakeDamaged(bulletDamage);
+            }
+            gameObject.SetActive(false);
         }
     }
 }

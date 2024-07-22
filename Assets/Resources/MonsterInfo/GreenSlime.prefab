@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3391684754945582000}
   - component: {fileID: -9028260932123260693}
   - component: {fileID: -7535910861540211644}
-  - component: {fileID: -663847469772453152}
+  - component: {fileID: 6890338341839071943}
+  - component: {fileID: 5228418101798678173}
   m_Layer: 8
   m_Name: GreenSlime
   m_TagString: Untagged
@@ -33,7 +34,8 @@ Transform:
   m_LocalPosition: {x: 1.84, y: 3.04, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8606415673129755302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &735724133546288453
@@ -76,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -9074539206338946419, guid: c80534141f80d28489b1ef92f8ff7d99,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -142,7 +144,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.12939966}
+  m_Offset: {x: 0.016174793, y: -0.16174972}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -153,7 +155,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.0323498}
+  m_Size: {x: 1.0471005, y: 0.67650056}
   m_EdgeRadius: 0
 --- !u!114 &-7535910861540211644
 MonoBehaviour:
@@ -169,9 +171,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _monsterType: 2
   dropIngredient: {fileID: 11400000, guid: c05b507b7680641468052644352cdc44, type: 2}
-  _maxHp: 10
-  scorePoint: 20
---- !u!114 &-663847469772453152
+  hitPlayerDamage: 5
+  _maxHp: 5
+  scorePoint: 5
+--- !u!114 &6890338341839071943
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +183,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 854245609222326031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c25620ecbdbe6b4a9cae5f1b8418f7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dbac2682b109c54782216e9a47c3bcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 0}
+  _bullet: {fileID: 9002370961549154094, guid: f9c4f40c654c7fd4f8e1b4658dc3a3bf, type: 3}
+  _shotPos:
+  - {fileID: 4101913001588009937}
+  _damage: 5
+  shotDelay: 5
+--- !u!50 &5228418101798678173
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854245609222326031}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!1 &4101913001588009937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8606415673129755302}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8606415673129755302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4101913001588009937}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.22000003, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1226601706531140614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

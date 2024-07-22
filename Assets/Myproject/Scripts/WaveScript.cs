@@ -6,15 +6,13 @@ public class WaveScript : MonoBehaviour
 {
     [SerializeField]
     GameObject[] monsterTrans;
-    [SerializeField]
     List<GameObject> monsterChild = new List<GameObject>();
-    public MonsterType[] monsterTypes;
+    public MonsterType[] monsterTypes { get; set; }
 
     Camera mainCamera;
     private void Start()
     {
         mainCamera = Camera.main;
-
         for (int i = 0; i < monsterTrans[GameManager.current.difficulty].transform.childCount; i++)
         {
             monsterChild.Add(MonsterManager.current.GetMosnter(monsterTypes
@@ -41,7 +39,7 @@ public class WaveScript : MonoBehaviour
             }
         }
     }
-    public bool ShipsStillAlive()
+    public bool MonstersStillAlive()
     { 
         for (int i = 0; i < monsterChild.Count; i++)
         {

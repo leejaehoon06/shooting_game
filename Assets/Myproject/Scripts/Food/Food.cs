@@ -10,5 +10,13 @@ public class Food : ScriptableObject
     public string foodName;
     [TextArea]
     public string foodInfo;
-    //public Ingredient[] ingredient;
+    public List<Ingredient> foodRecipe;
+    public Buff[] buff;
+}
+[System.Serializable]
+public class Buff
+{
+    public BuffType buffType;
+    public float buffNum;
+    public float buffTime;
 }

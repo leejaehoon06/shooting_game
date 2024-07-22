@@ -20,7 +20,7 @@ public class InventoryUI : MonoBehaviour
     InventorySlot inventorySlotPrefab;
     [SerializeField]
     GameObject inventoryBackground;
-    List<InventorySlot> inventorySlots = new List<InventorySlot>();
+    public List<InventorySlot> inventorySlots { get; private set; } = new List<InventorySlot>();
     void Start()
     {
         if (_current == null)
@@ -30,12 +30,12 @@ public class InventoryUI : MonoBehaviour
     }
     public void InventorySwitch()
     {
-        if(gameObject.activeSelf == false)
+        if(gameObject.activeSelf == false && Time.timeScale > 0)
         {
             gameObject.SetActive(true);
             Time.timeScale = 0;
         }
-        else
+        else if (gameObject.activeSelf == true)
         {
             gameObject.SetActive(false);
             Time.timeScale = 1;
@@ -58,8 +58,69 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+    public void MinIngredient(Ingredient ingredient)
+    {
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            if (inventorySlots[i].ingredient == ingredient)
+            {
+                inventorySlots[i].ingredientNum--;
+                if (inventorySlots[i].ingredientNum <= 0)
+                {
+                    inventorySlots[i].ingredient = null;
+                    InventoryFreshSlot();
+                }
+            }
+        }
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            inventorySlots[i].UpdateSlot();
+        }
+    }
     void InventoryFreshSlot()
     {
-        //자동 정렬 및 쓰이지 않는 슬롯 삭제
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            if (inventorySlots[i].ingredient == null)
+            {
+                if (i == inventorySlots.Count - 1)
+                {
+                    Destroy(inventorySlots[i].gameObject);
+                    inventorySlots.RemoveAt(i);
+                }
+                else if (i < inventorySlots.Count - 1)
+                {
+                    if (CheckNullSlot(i))
+                    {
+                        for (int j = i + 1; j < inventorySlots.Count; j++)
+                        {
+                            Destroy(inventorySlots[j].gameObject);
+                            inventorySlots.RemoveAt(j);
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < inventorySlots.Count; i++)
+        {
+            inventorySlots[i].UpdateSlot();
+        }
+    }
+    bool CheckNullSlot (int i)
+    {
+        for (int j = i + 1; j < inventorySlots.Count; j++)
+        {
+            if (inventorySlots[j].ingredient != null)
+            {
+                inventorySlots[i].ingredient = inventorySlots[j].ingredient;
+                inventorySlots[i].ingredientNum = inventorySlots[j].ingredientNum;
+                inventorySlots[i].UpdateSlot();
+                inventorySlots[j].ingredient = null;
+                inventorySlots[j].ingredientNum = 0;
+                inventorySlots[j].UpdateSlot();
+                return false;
+            }
+        }
+        return true;
     }
 }

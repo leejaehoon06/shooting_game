@@ -6,14 +6,18 @@ public abstract class Weapon : MonoBehaviour
 {
     [SerializeField]
     WeaponInfo weaponInfo;
+    [SerializeField]
+    AudioClip audioClip;
+    public AudioClip _audioClip {  get { return audioClip; } }
+    public WeaponInfo _weaponInfo { get { return weaponInfo; } set { weaponInfo = value; } }
     public int weaponLevel { get; set; }
-    public float shotTimer;
+    float shotTimer;
 
 
-    List<GameObject> bulletObjs = new List<GameObject>();
+    public List<GameObject> bulletObjs { get; set; } = new List<GameObject>();
 
     GameObject shotPosParent;
-    List<Transform> shotPosTrans = new List<Transform>();
+    public List<Transform> shotPosTrans { get; set; } = new List<Transform>();
 
     public virtual void Start()
     {
@@ -22,6 +26,10 @@ public abstract class Weapon : MonoBehaviour
     public void WeaponLevelUp()
     {
         weaponLevel++;
+        if (weaponLevel >= weaponInfo.weaponLevelInfos.Length - 1)
+        {
+            weaponLevel = weaponInfo.weaponLevelInfos.Length - 1;
+        }
         ShotPosInstan();
     }
     public void ShotPosInstan()
@@ -41,23 +49,18 @@ public abstract class Weapon : MonoBehaviour
             }
         }
     }
-    public virtual void Shoot()
+    public virtual bool Shoot()
     {
         if(shotTimer <= weaponInfo.weaponLevelInfos[weaponLevel].shotDelay)
         {
-            return;
-        }
-        for(int i=0; i < shotPosTrans.Count; i++)
-        {
-            bulletObjs.Add(Instantiate(weaponInfo.weaponLevelInfos[weaponLevel].bulletPrefab,
-            shotPosTrans[i].position, shotPosTrans[i].rotation));
-            bulletObjs[bulletObjs.Count - 1].GetComponent<Bullet>().bulletDamage
-                = weaponInfo.weaponLevelInfos[weaponLevel].weaponDamage;
+            return false;
         }
         shotTimer = 0;
+        Player.current.audioSource.Play();
+        return true;
     }
     public virtual void UpdateTimer()
     {
-        shotTimer += Time.deltaTime;
+        shotTimer += Time.deltaTime * Player.current.attackSpeed;
     }
 }

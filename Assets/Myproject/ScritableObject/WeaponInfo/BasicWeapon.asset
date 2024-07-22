@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e6447afb002ab488c689c08b029249, type: 3}
   m_Name: BasicWeapon
   m_EditorClassIdentifier: 
+  weapon: {fileID: 2444493802257701595, guid: c8a653a1a0fb5094793ce8ff563a092c, type: 3}
   weaponLevelInfos:
   - shotDelay: 1
     weaponDamage: 2

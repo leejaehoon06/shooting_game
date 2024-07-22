@@ -4,18 +4,34 @@ using UnityEngine;
 
 public class MonsterAttack : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    GameObject _bullet;
+    public GameObject bullet {  get { return _bullet; } }
+    [SerializeField]
+    GameObject[] _shotPos;
+    public GameObject[] shotPos { get { return _shotPos; } }
+    [SerializeField]
+    float _damage;
+    public float damage { get { return _damage; } }
+    [SerializeField]
+    float shotDelay;
+    float timer;
 
-    // Update is called once per frame
+    
     void Update()
     {
+        timer += Time.deltaTime;
         if (Time.timeScale > 0)
         {
-
+            if (timer >= shotDelay)
+            {
+                timer = 0;
+                Shot();
+            }
         }
+    }
+    public virtual void Shot()
+    {
+
     }
 }

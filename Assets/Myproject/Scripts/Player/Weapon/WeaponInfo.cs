@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class WeaponInfo : ScriptableObject
 {
+    public Weapon weapon;
     public WeaponLevelInfo[] weaponLevelInfos;
 }
 [System.Serializable]

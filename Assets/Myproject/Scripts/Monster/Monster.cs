@@ -11,48 +11,59 @@ public class Monster : MonoBehaviour, IHittable
     Ingredient dropIngredient;
 
     [SerializeField]
+    float hitPlayerDamage = 5;
+    [SerializeField]
     float _maxHp = 100;
-    public float maxHp { get { return _maxHp; } set { _maxHp = value; } }
+    public float maxHp { get { return _maxHp; } private set { _maxHp = value; } }
     float _curHp = 100;
-    public float curHp { get { return _curHp; } set { _curHp = value; } }
+    public float curHp { get { return _curHp; } private set { _curHp = value; } }
     [SerializeField]
     int scorePoint;
 
     Animator anim;
     BoxCollider2D coll;
-    Camera mianCamera;
-    MonsterMove move;
-    //MonsterAttack attack;
+    Camera mainCamera;
+    //MonsterMove move;
+    MonsterAttack attack;
 
     bool godMode = false;
 
     void Start()
     {
-        move = GetComponent<MonsterMove>();
-        move.enabled = false;
+        attack = GetComponent<MonsterAttack>();
+        attack.enabled = false;
         _curHp = _maxHp;
-        anim = GetComponent<Animator>();
+        if (GetComponent<Animator>() != null)
+        {
+            anim = GetComponent<Animator>();
+        }
         coll = GetComponent<BoxCollider2D>();
         coll.enabled = false;
-        mianCamera = Camera.main;
+        mainCamera = Camera.main;
     }
 
     void Update()
     {
         if (Time.timeScale > 0) 
         { 
-        if (transform.position.y <= mianCamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y
-        && godMode == false)
-        {
-            godMode = true;
-            coll.enabled = true;
-        }
+            if (transform.position.y <= mainCamera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y
+            && godMode == false)
+            {
+                godMode = true;
+                coll.enabled = true;
+            }
         }
     }
 
     public void Arrive()
     {
-        move.enabled = true;
+        attack.enabled = true;
+        coll.enabled = true;
+        if (monsterType == MonsterType.Boss)
+        {
+            mainCamera.GetComponent<CameraMove>().enabled = false;
+            GameManager.current.BossArive();
+        }
     }
 
     public void TakeDamaged(float damage)
@@ -62,34 +73,73 @@ public class Monster : MonoBehaviour, IHittable
             return;
         }
         _curHp -= damage;
-        Player.current.PlusUltimatePoint(scorePoint);
         if (_curHp > 0)
         {
-            anim.Play("Hurt", -1, 0);
+            if (GetComponent<Animator>() != null)
+                anim.Play("Hurt", -1, 0);
         }
         else
         {
             coll.enabled = false;
-            anim.Play("Death");
+            attack.enabled = false;
+            if (GetComponent<Animator>() != null)
+                anim.Play("Death");
             GameManager.current.AddScore(scorePoint);
-            Player.current.PlusExp(scorePoint);
-            DropItem();
-            StartCoroutine(deathCheck());
+            if (monsterType == MonsterType.Boss)
+            {
+                GameManager.current.Clear();
+            }
+            else
+            {
+                Player.current.PlusExp(scorePoint);
+                Player.current.PlusUltimatePoint(scorePoint);
+                DropItem();
+                StartCoroutine(deathCheck());
+            }
         }
     }
     void DropItem()
     {
-        IngredientObj ingredientObj = IngredientManager.current.GetIngredient(dropIngredient);
-        ingredientObj.gameObject.transform.position = transform.position;
+        if (Random.Range(0, 10) < 5)
+        {
+            IngredientObj ingredientObj = IngredientManager.current.GetIngredient(dropIngredient);
+            ingredientObj.gameObject.transform.position = transform.position;
+        }
+        if (Random.Range(0, 10) < 3)
+        {
+            GameObject obj = DropManager.current.InstanWeaponDrop();
+            obj.transform.parent = mainCamera.transform;
+            obj.transform.position = transform.position;
+        }
+        if (Random.Range(0, 10) < 2)
+        {
+            GameObject obj = DropManager.current.IstanNormalDrop();
+            obj.transform.parent = mainCamera.transform;
+            obj.transform.position = transform.position;
+        }
     }
     IEnumerator deathCheck()
     {
-        WaitForEndOfFrame waitFrame = new WaitForEndOfFrame();
-        yield return waitFrame;
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
+        if (anim != null) 
+        { 
+            WaitForEndOfFrame waitFrame = new WaitForEndOfFrame();
             yield return waitFrame;
+            while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+            {
+                yield return waitFrame;
+            }
         }
         gameObject.SetActive(false);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            IHittable hittable = collision.GetComponent<IHittable>();
+            if (Player.current.godMod == false)
+            {
+                hittable.TakeDamaged(hitPlayerDamage);
+            }
+        }
     }
 }

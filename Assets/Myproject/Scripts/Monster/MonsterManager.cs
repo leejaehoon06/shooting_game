@@ -7,6 +7,11 @@ public enum MonsterType
     Red_Slime,
     Blue_Slime,
     Green_Slime,
+    Black_Worm,
+    Red_Worm,
+    Black_Cerberus,
+    Red_Cerberus,
+    Boss
 }
 public class MonsterManager : MonoBehaviour
 {

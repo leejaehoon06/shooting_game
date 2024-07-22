@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37720b9d92239141a1064858167aa3a, type: 3}
+  m_Name: GreenPotion
+  m_EditorClassIdentifier: 
+  foodImage: {fileID: 21300000, guid: 2863b79a90a4d674cafbd61ebdca39b0, type: 3}
+  foodName: "\uB300\uC6A9\uB7C9 \uCD08\uB85D \uD3EC\uC158"
+  foodInfo: "\uD480\uC758 \uD798\uC774 \uB290\uAEF4\uC9C0\uB294 \uD3EC\uC158\uC774\uB2E4.
+    \uBA39\uC73C\uBA74 10\uCD08\uAC04 \uACF5\uACA9 \uC18D\uB3C4\uAC00 30%\uB9CC\uD07C
+    \uB298\uC5B4\uB0A0 \uAC83 \uAC19\uB2E4."
+  foodRecipe:
+  - {fileID: 11400000, guid: c05b507b7680641468052644352cdc44, type: 2}
+  - {fileID: 11400000, guid: c05b507b7680641468052644352cdc44, type: 2}
+  buff:
+  - buffType: 2
+    buffNum: 1.3
+    buffTime: 10

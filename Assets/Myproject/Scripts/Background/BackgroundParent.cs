@@ -36,4 +36,11 @@ public class BackgroundParent : MonoBehaviour
             backgroundIndex = 0;
         }
     }
+    public void DestroyBackground()
+    {
+        for (int i = 0; i < backgroundObjs.Length; i++)
+        {
+            Destroy(backgroundObjs[i]);
+        }
+    }
 }

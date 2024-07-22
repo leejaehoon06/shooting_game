@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: GreenWater
   m_EditorClassIdentifier: 
   ingredientImage: {fileID: 21300000, guid: 394b95f81c1f7b345bb650835aeb69d5, type: 3}
-  ingredientName: green water
-  ingredientInfo: 
+  ingredientName: "\uADF8\uB9B0 \uC2AC\uB77C\uC784\uC758 \uC810\uC561"
+  ingredientInfo: "\uCD08\uB85D \uBE5B\uC774 \uB3C4\uB294 \uC810\uC561\uC774\uB2E4.
+    \uD480\uC758 \uAE30\uC6B4\uC774 \uC788\uB294 \uB4EF \uD558\uB2E4"

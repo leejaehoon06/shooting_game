@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e6447afb002ab488c689c08b029249, type: 3}
+  m_Name: RedWeapon
+  m_EditorClassIdentifier: 
+  weapon: {fileID: -5303160062196588999, guid: 447f19790639c7a4aa8f8df35f501fcc, type: 3}
+  weaponLevelInfos:
+  - shotDelay: 0.7
+    weaponDamage: 7
+    shotPosParentPrefab: {fileID: 3763956634218020489, guid: 72eb98d54d38a344091b05532f51eca4,
+      type: 3}
+    bulletPrefab: {fileID: 7438336534442532017, guid: 43f6e07154a6de248b4ad5b03021bb56,
+      type: 3}
+  - shotDelay: 0.7
+    weaponDamage: 9
+    shotPosParentPrefab: {fileID: 3763956634218020489, guid: fdb71bbf1189f824a86b4ffa0505602a,
+      type: 3}
+    bulletPrefab: {fileID: 7438336534442532017, guid: 43f6e07154a6de248b4ad5b03021bb56,
+      type: 3}
+  - shotDelay: 0.7
+    weaponDamage: 11
+    shotPosParentPrefab: {fileID: 3763956634218020489, guid: 8ee6f81c1010d3d49ba454930721cddc,
+      type: 3}
+    bulletPrefab: {fileID: 7438336534442532017, guid: 43f6e07154a6de248b4ad5b03021bb56,
+      type: 3}
